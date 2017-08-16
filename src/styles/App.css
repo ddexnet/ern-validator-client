@@ -1,0 +1,63 @@
+/* Base Application Styles */
+html, body, .app-container, .main-container {
+  width: 100%;
+  height: 100%;
+}
+
+.main-container > div {
+  height: 100%;
+}
+
+.navbar {
+  background-image: none;
+}
+
+.history-panel-body > .panel-body {
+  background-color: rgb(255,255,208);
+}
+
+.modal-dialog {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 90px !important;
+}
+
+.modal-open {
+  opacity: 0.5 !important;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ycm-body {
+  padding-top: 50px;
+}
+
+.appheader-buttonbar {
+  padding-top: 10px;
+}
+
+.dropdown-menu > form {
+  min-width: 400px;
+}
+
+table.table{
+  margin-bottom: 0px;
+}
+
+.panel{
+   word-wrap: break-word;
+}
