@@ -20,9 +20,9 @@ function setValidateError(validateError) {
   _validateError = validateError;
 }
 
- function reset() {
-     _schematronValidation = [];
-    }
+function reset() {
+  _schematronValidation = [];
+}
 
 class StoreClass extends EventEmitter {
 

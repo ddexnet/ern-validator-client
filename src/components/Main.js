@@ -11,19 +11,19 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 
 class AppComponent extends React.Component {
-    render() {
-      return (
+  render() {
+    return (
       <Router>
         <div>
           <Header>
-              <Route exact path="/" component={Ern}/>
-              <Route path="/help" component={Help}/>
-              <Route path="/about" component={About}/>
+            <Route exact path="/" component={Ern}/>
+            <Route path="/help" component={Help}/>
+            <Route path="/about" component={About}/>
           </Header>
         </div>
       </Router>
-      );
-    }
+    );
+  }
 }
 
 AppComponent.defaultProps = {

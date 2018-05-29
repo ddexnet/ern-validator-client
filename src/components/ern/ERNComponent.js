@@ -12,20 +12,18 @@ class ERNComponent extends React.Component {
 
   constructor() {
     super();
-    this.state = { ernFile: undefined,
-                   schemaValidation: '',
-                   schemaPanel: 'Schema Validation (XSD)',
-                   schematronPanel: 'Schematron Validation',
-                   schematronValidation: [],
-                   schemaVersion: 'schemaVersion',
-                   schematronVersion: 'schematronVersion',
-                   profileVersion: 'profileVersion'};
+    this.state = { messageFile: undefined,
+      schemaValidation: '',
+      schemaPanel: 'Schema Validation (XSD)',
+      schematronPanel: 'Schematron Validation',
+      schematronValidation: [],
+      messageSchemaVersionId: 'messageSchemaVersionId',
+      releaseProfileVersionId: 'releaseProfileVersionId',
+      schemaMessageType: ''};
 
-
-    this.handleErnFileChange = this.handleErnFileChange.bind(this);
-    this.handleSchemaVersionChange = this.handleSchemaVersionChange.bind(this);
-    this.handleSchematronVersionChange = this.handleSchematronVersionChange.bind(this);
-    this.handleProfileVersionChange = this.handleProfileVersionChange.bind(this);
+    this.handleMessageFileChange = this.handleMessageFileChange.bind(this);
+    this.handleMessageSchemaVersionIdChange = this.handleMessageSchemaVersionIdChange.bind(this);
+    this.handleReleaseProfileVersionIdChange = this.handleReleaseProfileVersionIdChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -35,106 +33,80 @@ class ERNComponent extends React.Component {
     <div>
       <Grid>
         <div>
-
-            <ERNForm handleSubmit={this.handleSubmit}
-                     handleSchemaVersionChange={this.handleSchemaVersionChange}
-                     schemaVersion={this.state.schemaVersion}
-                     handleSchematronVersionChange={this.handleSchematronVersionChange}
-                     schematronVersion={this.state.schematronVersion}
-                     handleProfileVersionChange={this.handleProfileVersionChange}
-                     profileVersion={this.state.profileVersion}
-                     ernFile={this.state.ernFile}
-                     handleErnFileChange={this.handleErnFileChange}/>
-
-            <ERNPanels schematronValidation={this.state.schematronValidation}
-                      schematronPanel={this.state.schematronPanel}
-                      schemaValidation={this.state.schemaValidation}
-                      schemaPanel={this.state.schemaPanel}/>
-          </div>
+          <ERNForm handleSubmit={this.handleSubmit}
+            handleMessageSchemaVersionIdChange={this.handleMessageSchemaVersionIdChange}
+            messageSchemaVersionId={this.state.messageSchemaVersionId}
+            handleReleaseProfileVersionIdChange={this.handleReleaseProfileVersionIdChange}
+            releaseProfileVersionId={this.state.releaseProfileVersionId}
+            messageFile={this.state.messageFile}
+            handleMessageFileChange={this.handleMessageFileChange}/>
+          <ERNPanels schematronValidation={this.state.schematronValidation}
+            schematronPanel={this.state.schematronPanel}
+            schemaValidation={this.state.schemaValidation}
+            schemaPanel={this.state.schemaPanel}/>
+        </div>
       </Grid>
-  </div>
-    );
+    </div>
+  );
   }
 
-   handleErnFileChange(event) {
-     this.setState({ernFile: event.target.value, schemaPanel: 'Schema Validation (XSD)', schematronValidation: [], schemaValidation: ''});
-     ActionCreator.reset();
+ handleMessageFileChange(event) {
+   this.setState({messageFile: event.target.value, schemaPanel: 'Schema Validation (XSD)', schematronValidation: [], schemaValidation: ''});
+   ActionCreator.reset();
+ }
+
+ handleMessageSchemaVersionIdChange(event) {
+   event.preventDefault();
+   this.setState({messageSchemaVersionId: event.target.title});
+   console.log(this.state.messageSchemaVersionId);
+ }
+
+ handleReleaseProfileVersionIdChange(event) {
+   event.preventDefault();
+   this.setState({releaseProfileVersionId: event.target.title});
+   console.log(this.state.releaseProfileVersionId);
+ }
+
+ componentWillMount() {
+   Store.addChangeListener(this.onChange);
+ }
+
+ componentWillUnmount() {
+   Store.removeChangeListener(this.onChange);
+ }
+
+ onChange() {
+   this.setState({ schemaValidation: Store.getSchemaValidation(), schematronValidation: Store.getSchematronValidation().reverse() });
+ }
+
+ componentDidUpdate(){
+   if (this.state.messageSchemaVersionId == ''){
+     this.setState({ messageSchemaVersionId:'messageSchemaVersionId', schemaValidation: '', schemaPanel: 'Schema Validation (XSD)'});
    }
+   if (this.state.releaseProfileVersionId == ''){
+     this.setState({ releaseProfileVersionId:'releaseProfileVersionId', schematronValidation: []});
+   }
+ }
 
-    handleSchemaVersionChange(event) {
-      event.preventDefault();
-      this.setState({schemaVersion: event.target.title});
-      console.log(this.state.schemaVersion);
-    }
-
-   handleSchematronVersionChange(event) {
-        event.preventDefault();
-        this.setState({schematronVersion: event.target.title});
-        console.log(this.state.schematronVersion);
-      }
-
-   handleProfileVersionChange(event) {
-        event.preventDefault();
-        this.setState({profileVersion: event.target.title});
-        console.log(this.state.profileVersion);
-      }
-
-
-  componentWillMount() {
-    Store.addChangeListener(this.onChange);
-  }
-
-
-  componentWillUnmount() {
-    Store.removeChangeListener(this.onChange);
-  }
-
-  onChange() {
-      this.setState({ schemaValidation: Store.getSchemaValidation(), schematronValidation: Store.getSchematronValidation().reverse() });
-  }
-
-
-  componentDidUpdate(){
-
-       if (this.state.schemaVersion == ''){
-           this.setState({ schemaVersion:'schemaVersion', schemaValidation: '', schemaPanel: 'Schema Validation (XSD)'});
-        }
-
-        if (this.state.schematronVersion == ''){
-           this.setState({ schematronVersion:'schematronVersion', schematronValidation: []});
-        }
-
-        if (this.state.profileVersion == ''){
-              this.setState({ profileVersion:'profileVersion', schematronValidation: []});
-        }
-
-
-  }
-
-  handleSubmit(e){
-      e.preventDefault();
-
-      // we use FormData as superagent does not support mulitpart on the client
-      if (this.state.schemaVersion === "schemaVersion" ||
-          this.state.profileVersion === "profileVersion" ||
-          this.state.schematronVersion === "schematronVersion"){
-                    this.setState({ schemaValidation:'Please choose a schemaVersion, schematronVersion and Profile Version to begin validating your XML Document.'});
-                    return false;
-      }
-      if(this.state.ernFile === '' || this.state.ernFile === undefined){
-            this.setState({ schemaValidation:'Please insert Document', schematronValidation:[], schemaPanel: 'Schema Validation (XSD)'});
-            return false;
-      }
-      this.setState({ schemaPanel: 'Schema Validation (XSD) - ' + this.state.ernFile.replace(/^.*[\\\/]/, '')});
-      var form = $('#ern-validate-form')[0];
-      var formData = new FormData(form);
-      formData.append("schemaVersion", this.state.schemaVersion);
-      formData.append("schematronVersion", this.state.schematronVersion);
-      formData.append("profileVersion", this.state.profileVersion);
-      ActionCreator.ValidateXML(formData);
-      this.setState({ ernFile:''});
-
-}
-
+ handleSubmit(e){
+   e.preventDefault();
+   // we use FormData as superagent does not support mulitpart on the client
+   if (this.state.messageSchemaVersionId === "messageSchemaVersionId" ||
+     this.state.releaseProfileVersionId === "releaseProfileVersionId"){
+     this.setState({ schemaValidation:'Please choose a schemaVersion and Profile Version to begin validating your XML Document.'});
+     return false;
+   }
+   if(this.state.messageFile === '' || this.state.messageFile === undefined){
+     this.setState({ schemaValidation:'Please insert Document', schematronValidation:[], schemaPanel: 'Schema Validation (XSD)'});
+     return false;
+   }
+   this.setState({ schemaPanel: 'Schema Validation (XSD) - ' + this.state.messageFile.replace(/^.*[\\\/]/, '')});
+   var form = $('#ern-validate-form')[0];
+   var formData = new FormData(form);
+   formData.append("messageSchemaVersionId", 'ern/' + this.state.messageSchemaVersionId);
+   formData.append("releaseProfileVersionId", 'commonreleasetypes/14/'  + this.state.releaseProfileVersionId);
+   ActionCreator.ValidateXML(formData);
+   this.setState({ messageFile:''});
+ }
 }
 export default ERNComponent;
