@@ -7,9 +7,9 @@ export default {
   ValidateXML: function(formData) {
     return new Promise((resolve, reject) => {
       request
-        .post('http://localhost:6060/api/json/validateXML')
+        .post('http://localhost:6060/api/json/validate')
         .withCredentials()
-         .send(formData)
+        .send(formData)
         .set('Accept', 'application/json')
         .end((error, response) => {
           console.log(error);
@@ -17,22 +17,5 @@ export default {
           resolve(JSON.parse(response.text));
         });
     });
-  },
-    schematronValidate: function(formData) {
-      return new Promise((resolve, reject) => {
-        request
-          .post('http://localhost:6060/api/json/validateSchematron')
-          .withCredentials()
-           .send(formData)
-           .set('Accept', 'application/json')
-          .end((error, response) => {
-          console.log(JSON.parse(response.text));
-            if (error) reject(error);
-            resolve(JSON.parse(response.text));
-          });
-      });
-    }
-
-
-
+  }
 }

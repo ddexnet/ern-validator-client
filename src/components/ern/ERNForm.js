@@ -1,59 +1,58 @@
-import request from 'superagent/lib/client'
 import React from 'react';
-import {Panel, Button, Form, FormGroup, ControlLabel, Grid, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import {Panel, Button, Form, FormGroup, ControlLabel, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 
-class ERNForm extends React.Component{
-  render(){
-    return(
-          <Panel header="Insert Document">
-            <Form inline id="ern-validate-form" onSubmit={this.props.handleSubmit}>
-
-              <FormGroup onClick={this.props.handleSchemaVersionChange}>
-                 <ButtonToolbar>
-                   <DropdownButton title={this.props.schemaVersion} bsSize="small" id="dropdown-size-small">
-                    <MenuItem title="3.4.1">3.4.1</MenuItem>
-                    <MenuItem  divider/>
-                    <MenuItem title="3.7.1">3.7.1</MenuItem>
-                    <MenuItem divider />
-                    <MenuItem title="3.9.1">3.9.1</MenuItem>
-                  </DropdownButton>
-                </ButtonToolbar>
-              </FormGroup>
-
-              <FormGroup onClick={this.props.handleSchematronVersionChange}>
-                 <ButtonToolbar>
-                   <DropdownButton title={this.props.schematronVersion} bsSize="small" id="dropdown-size-small">
-                    <MenuItem title="14">14</MenuItem>
-                    <MenuItem  divider/>
-                    <MenuItem title="17">17</MenuItem>
-                  </DropdownButton>
-                </ButtonToolbar>
-              </FormGroup>
-
-              <FormGroup onClick={this.props.handleProfileVersionChange}>
-                 <ButtonToolbar>
-                   <DropdownButton title={this.props.profileVersion} bsSize="small" id="dropdown-size-small">
-                    <MenuItem title="AudioAlbumMusicOnly">AudioAlbumMusicOnly</MenuItem>
-                    <MenuItem  divider/>
-                    <MenuItem title="AudioSingle">AudioSingle</MenuItem>
-                  </DropdownButton>
-                </ButtonToolbar>
-              </FormGroup>
-              <br/>
-              <FormGroup>
-                  <ControlLabel></ControlLabel>
-                  {' '}
-                  <input type="file" name="ernFile" value={this.props.ernFile} onChange={this.props.handleErnFileChange} />
-              </FormGroup>
-                {' '}
-                <br/>
-                <br/>
-              <Button bsStyle="primary" type="submit">Validate</Button>
-            </Form>
-          </Panel>
-
-      );
+function getDropDownOptions(data) {
+  let items = [];
+  if (data) {
+    for (let i = 0; i <= data.length; i++) {
+        items.push(<MenuItem title={data[i]}>{data[i]}</MenuItem>)
     }
   }
+  return items;
+}
+
+class ERNForm extends React.Component{
+
+  constructor() {
+    super();
+    this.messageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2'];
+    this.releaseProfileVersionIdList = ['AudioAlbum', 'AudioAlbumMusicOnly', 'AudioBook', 'AudioSingle', 'BusinessProfile',
+      'DigitalBoxedSet', 'DigitalClassicalAudioAlbum', 'FilmBundle', 'LongformVideo', 'MidiRingtone', 'MixedMediaBundle',
+       'Ringtone', 'SimpleVideoSingle', 'SingleResourceRelease', 'SingleResourceReleaseWithCoverArt', 'TVSeries', 'VideoAlbum', 'VideoAlbum']
+  }
+
+  render(){
+    return(
+      <Panel header="Insert Document">
+        <Form inline id="ern-validate-form" onSubmit={this.props.handleSubmit}>
+          <FormGroup onClick={this.props.handleMessageSchemaVersionIdChange}>
+            <ButtonToolbar>
+              <DropdownButton title={this.props.messageSchemaVersionId} bsSize="small" id="dropdown-size-small">
+                {getDropDownOptions(this.messageSchemaVersionIdList)}
+              </DropdownButton>
+            </ButtonToolbar>
+          </FormGroup>
+          <FormGroup onClick={this.props.handleReleaseProfileVersionIdChange}>
+            <ButtonToolbar>
+              <DropdownButton title={this.props.releaseProfileVersionId} bsSize="small" id="dropdown-size-small">
+                {getDropDownOptions(this.releaseProfileVersionIdList)}
+              </DropdownButton>
+            </ButtonToolbar>
+          </FormGroup>
+          <br/>
+          <FormGroup>
+            <ControlLabel></ControlLabel>
+              {' '}
+                <input type="file" name="messageFile" value={this.props.messageFile} onChange={this.props.handleMessageFileChange} />
+          </FormGroup>
+            {' '}
+          <br/>
+          <br/>
+          <Button bsStyle="primary" type="submit">Validate</Button>
+        </Form>
+      </Panel>
+    );
+  }
+}
 
 export default ERNForm;
