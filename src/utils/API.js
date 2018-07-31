@@ -12,9 +12,10 @@ export default {
         .send(formData)
         .set('Accept', 'application/json')
         .end((error, response) => {
-          console.log(error);
-          if (error) reject(error);
-          resolve(JSON.parse(response.text));
+          var responseText = JSON.parse(response.text);
+          console.log(responseText.error);
+          if (responseText.error) reject(responseText);
+          resolve(responseText);
         });
     });
   }

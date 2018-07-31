@@ -91,11 +91,6 @@ class ERNComponent extends React.Component {
  handleSubmit(e){
    e.preventDefault();
    // we use FormData as superagent does not support mulitpart on the client
-   if (this.state.messageSchemaVersionId === "messageSchemaVersionId" ||
-     this.state.releaseProfileVersionId === "releaseProfileVersionId"){
-     this.setState({ schemaValidation:'Please choose a schemaVersion and Profile Version to begin validating your XML Document.'});
-     return false;
-   }
    if(this.state.messageFile === '' || this.state.messageFile === undefined){
      this.setState({ schemaValidation:'Please insert Document', schematronValidation:[], schemaPanel: 'Schema Validation (XSD)'});
      return false;
@@ -103,8 +98,16 @@ class ERNComponent extends React.Component {
    this.setState({ schemaPanel: 'Schema Validation (XSD) - ' + this.state.messageFile.replace(/^.*[\\\/]/, '')});
    var form = $('#ern-validate-form')[0];
    var formData = new FormData(form);
-   formData.append("messageSchemaVersionId", 'ern/' + this.state.messageSchemaVersionId);
-   formData.append("releaseProfileVersionId", 'commonreleasetypes/14/'  + this.state.releaseProfileVersionId);
+   if (this.state.messageSchemaVersionId == "messageSchemaVersionId") {
+     formData.append("messageSchemaVersionId", '');
+   } else {
+     formData.append("messageSchemaVersionId", 'ern/' + this.state.messageSchemaVersionId);
+   }
+   if (this.state.releaseProfileVersionId == "releaseProfileVersionId") {
+     formData.append("releaseProfileVersionId", '');
+   } else {
+     formData.append("releaseProfileVersionId", 'commonreleasetypes/14/'  + this.state.releaseProfileVersionId);
+   }
    ActionCreator.ValidateXML(formData);
    this.setState({ messageFile:''});
  }

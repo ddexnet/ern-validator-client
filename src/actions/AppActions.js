@@ -25,10 +25,13 @@ var ActionCreator = {
         });
       }
 	}).catch(function(errorMessage){
-      var errorMessage = 'Sorry but it seems something went wrong.';
+      var message = 'Sorry but it seems something went wrong.';
+      if (errorMessage.message != '') {
+        message = errorMessage.message;
+      }
 	  AppDispatcher.dispatch({
         actionType: AppConstants.SCHEMA_VALIDATION,
-        schemaValidation: errorMessage,
+        schemaValidation: message,
         schematronValidation : []
       });
     });
