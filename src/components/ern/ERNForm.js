@@ -13,6 +13,7 @@ function getDropDownOptions(data) {
 
 function getReleaseProfileDropDownOptions(data) {
   let items = [];
+  items.push(<MenuItem title='None'>None</MenuItem>)
   Object.keys(data).forEach(function(key){
     var value = data[key];
     if (data) {
