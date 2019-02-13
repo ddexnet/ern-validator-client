@@ -7,21 +7,19 @@ var ActionCreator = {
     API
     .ValidateXML(formData)
     .then(function (response) {
-	  if(response[0]['status']){
-	    console.log('An error was detected!');
-	  }
-      if (!response[0]['schema'].includes('Message vaildates against schema version')){
-    	AppDispatcher.dispatch({
+      if (!response[0]['schema'].includes('Message validates against schema version')){
+    	  AppDispatcher.dispatch({
           actionType: AppConstants.SCHEMA_VALIDATION,
           schemaValidation: response[0]['schema'],
-          schematronValidation : []
+          schematronValidation : [],
+          businessProfileSchematronValidation : []
         });
       }else{
-        console.log(response[0]['schematron']);
         AppDispatcher.dispatch({
           actionType: AppConstants.SCHEMA_VALIDATION,
           schemaValidation: response[0]['schema'],
-          schematronValidation : response[0]['schematron']
+          schematronValidation : response[0]['schematron'],
+          businessProfileSchematronValidation : response[0]['businessProfileSchematron']
         });
       }
 	}).catch(function(errorMessage){
@@ -32,7 +30,8 @@ var ActionCreator = {
 	  AppDispatcher.dispatch({
         actionType: AppConstants.SCHEMA_VALIDATION,
         schemaValidation: message,
-        schematronValidation : []
+        schematronValidation : [],
+        businessProfileSchematronValidation : []
       });
     });
   }

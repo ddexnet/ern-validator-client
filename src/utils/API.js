@@ -13,7 +13,6 @@ export default {
         .set('Accept', 'application/json')
         .end((error, response) => {
           var responseText = JSON.parse(response.text);
-          console.log(responseText.error);
           if (responseText.error) reject(responseText);
           resolve(responseText);
         });

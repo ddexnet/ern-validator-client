@@ -13,8 +13,8 @@ class Help extends Component {
 
      handleClick(e){
           e.preventDefault();
-          this.setState({ github_api:<a href="https://github.com/elibeta22/ddex-mesage-validator-api">DDEX Validator API </a>,
-                          github_client:<a href="https://github.com/elibeta22/ddex-message-validator-client">DDEX Validator Client</a>});
+          this.setState({ github_api:<a href="https://github.com/ddexnet/ern-validator-api">DDEX Validator API </a>,
+                          github_client:<a href="https://github.com/ddexnet/ern-validator-client">DDEX Validator Client</a>});
     }
 
   render() {
