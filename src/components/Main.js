@@ -7,7 +7,7 @@ import About from './main/About';
 import '../styles/bootstrap/css/bootstrap.min.css';
 import '../styles/bootstrap/css/bootstrap-theme.min.css';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 class AppComponent extends React.Component {

@@ -6,7 +6,7 @@ class ERNPanel extends React.Component{
     return(
     <div>
       <div>
-        <Panel header={this.props.schemaPanel}>
+        <Panel bsStyle="primary" header={this.props.schemaPanel}>
           <xmp>
             <div>
               {this.props.schemaValidation}
@@ -15,10 +15,21 @@ class ERNPanel extends React.Component{
         </Panel>
       </div>
       <div>
-        <Panel bsStyle="success" header={this.props.schematronPanel}>
-          <xmp>
+        <Panel bsStyle="warning" header={this.props.schematronPanel}>
+          <xmp className="xmp-panel">
             <div>
               {this.props.schematronValidation.map((schematronValidate) => (
+                <p>{schematronValidate.msg}  {schematronValidate.role}</p>
+              ))}
+            </div>
+          </xmp>
+        </Panel>
+      </div>
+      <div>
+        <Panel bsStyle="info" header={this.props.businessProfileSchematronPanel}>
+          <xmp className="xmp-panel">
+            <div>
+              {this.props.businessProfileSchematronValidation.map((schematronValidate) => (
                 <p>{schematronValidate.msg}  {schematronValidate.role}</p>
               ))}
             </div>
