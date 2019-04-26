@@ -30,8 +30,10 @@ class ERNForm extends React.Component{
 
   constructor() {
     super();
-    this.schemaList = ['ERN', 'RIN'];
-    this.messageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1'];
+    this.schemaList = ['ERN', 'RIN Full'];
+    this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1'];
+    this.rinMessageSchemaVersionIdList = ['1.1'];
+    this.messageSchemaVersionIdList = ['Please select a schema.'];
     this.releaseProfileVersionIdList = {'v1.3':[ 'AudioAlbum', 'AudioAlbumMusicOnly', 'AudioAlbumMusicAndSpeech', 'AudioSingle', 'AudioBook', 'DigitalBoxedSet',
          'DigitalClassicalAudioAlbum', 'FilmBundle', 'LongformVideo', 'MidiRingtone', 'MixedMediaBundle', 'ReleaseProfileDeletedRules', 'Ringtone', 'SimpleVideoSingle',
          'SingleResourceRelease','SingleResourceReleaseWithCoverArt', 'TVSeries', 'VideoAlbum', 'VideoSingle', 'Wallpaper' ],
@@ -53,6 +55,7 @@ class ERNForm extends React.Component{
               </DropdownButton>
             </ButtonToolbar>
           </FormGroup>
+          { this.props.schema == 'Schema'&&
           <FormGroup onClick={this.props.handleMessageSchemaVersionIdChange}>
             <ButtonToolbar>
               <DropdownButton title={this.props.messageSchemaVersionId} bsSize="small" id="dropdown-size-small">
@@ -60,7 +63,26 @@ class ERNForm extends React.Component{
               </DropdownButton>
             </ButtonToolbar>
           </FormGroup>
-          { this.props.messageSchemaVersionId != '3.4.1' &&
+          }
+          { this.props.schema == 'ERN'&&
+          <FormGroup onClick={this.props.handleMessageSchemaVersionIdChange}>
+            <ButtonToolbar>
+              <DropdownButton title={this.props.messageSchemaVersionId} bsSize="small" id="dropdown-size-small">
+                {getDropDownOptions(this.ernMessageSchemaVersionIdList)}
+              </DropdownButton>
+            </ButtonToolbar>
+          </FormGroup>
+          }
+          { this.props.schema == 'RIN Full'&&
+          <FormGroup onClick={this.props.handleMessageSchemaVersionIdChange}>
+            <ButtonToolbar>
+              <DropdownButton title={this.props.messageSchemaVersionId} bsSize="small" id="dropdown-size-small">
+                {getDropDownOptions(this.rinMessageSchemaVersionIdList)}
+              </DropdownButton>
+            </ButtonToolbar>
+          </FormGroup>
+          }
+          { !(this.props.messageSchemaVersionId == '3.4.1' || this.props.schema == 'RIN Full') &&
             <FormGroup onClick={this.props.handleReleaseProfileVersionIdChange}>
               <ButtonToolbar className="custom-button">
                 <DropdownButton title={this.props.releaseProfileVersionId} id="dropdown-size-small" bsSize="small">
