@@ -84,7 +84,7 @@ class ERNComponent extends React.Component {
   
   handleSchemaChange(event) {
     event.preventDefault();
-    this.setState({schema: event.target.title});
+    this.setState({schema: event.target.title, messageSchemaVersionId: 'Schema Version', releaseProfileVersionId: 'Release Profile'});
   }
 
   handleReleaseProfileVersionIdChange(event) {
@@ -126,7 +126,7 @@ class ERNComponent extends React.Component {
     this.setState({ schemaPanel: 'Schema Validation (XSD) - ' + this.state.messageFile.replace(/^.*[\\\/]/, '')});
     var form = $('#ern-validate-form')[0];
     var formData = new FormData(form);
-    if (this.state.messageSchemaVersionId == 'ERN Version') {
+    if (this.state.messageSchemaVersionId == 'Schema Version') {
       formData.append('messageSchemaVersionId', '');
     } else {
       const selectedSchema = (this.state.schema == 'Schema') ? 'ern' : this.state.schema;

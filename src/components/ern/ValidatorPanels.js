@@ -7,7 +7,7 @@ class ERNPanel extends React.Component{
     <div>
       <div>
         <Panel bsStyle="primary" header={this.props.schemaPanel}>
-          <xmp>
+          <xmp className="xmp-panel">
             <div>
               {this.props.schemaValidation}
             </div>
