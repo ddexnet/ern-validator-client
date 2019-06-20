@@ -11,18 +11,16 @@ function getDropDownOptions(data) {
   return items;
 }
 
-function getReleaseProfileDropDownOptions(data) {
+function getReleaseProfileDropDownOptions(data, messageSchemaVersionId) {
   let items = [];
   items.push(<MenuItem title='None'>None</MenuItem>)
-  Object.keys(data).forEach(function(key){
-    var value = data[key];
-    if (data) {
-      items.push(<ControlLabel className="box-label" bsSize="large" >==================={key}=====================</ControlLabel>);
-      for (let i = 0; i <= value.length; i++) {
-          items.push(<MenuItem title={value[i]}>{value[i]}</MenuItem>)
-      }
+  if (messageSchemaVersionId && messageSchemaVersionId != 'Schema Version') {
+    var dict = { '3.7.1':'v1.3', '3.8.2':'v1.4', '4.1':'v2.1', '4.1.1':'v2.1' };
+    var value = data[dict[messageSchemaVersionId]];
+    for (let i = 0; i <= value.length; i++) {
+      items.push(<MenuItem title={value[i]}>{value[i]}</MenuItem>)
     }
-  });
+  }
   return items;
 }
 
@@ -31,7 +29,7 @@ class ERNForm extends React.Component{
   constructor() {
     super();
     this.schemaList = ['ERN', 'RIN Full'];
-    this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1'];
+    this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1', '4.1.1'];
     this.rinMessageSchemaVersionIdList = ['1.1'];
     this.messageSchemaVersionIdList = ['Please select a schema.'];
     this.releaseProfileVersionIdList = {'v1.3':[ 'AudioAlbum', 'AudioAlbumMusicOnly', 'AudioAlbumMusicAndSpeech', 'AudioSingle', 'AudioBook', 'DigitalBoxedSet',
@@ -86,7 +84,7 @@ class ERNForm extends React.Component{
             <FormGroup onClick={this.props.handleReleaseProfileVersionIdChange}>
               <ButtonToolbar className="custom-button">
                 <DropdownButton title={this.props.releaseProfileVersionId} id="dropdown-size-small" bsSize="small">
-                  {getReleaseProfileDropDownOptions(this.releaseProfileVersionIdList)}
+                  {getReleaseProfileDropDownOptions(this.releaseProfileVersionIdList, this.props.messageSchemaVersionId)}
                 </DropdownButton>
               </ButtonToolbar>
             </FormGroup>

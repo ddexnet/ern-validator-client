@@ -68,13 +68,11 @@ class ERNComponent extends React.Component {
   }
 
   handleMessageFileChange(event) {
-   this.setState({ messageFile: event.target.value, schemaPanel: 'Schema Validation (XSD)', schemaValidation: '', schematronValidation: [], businessProfileSchematronValidation: []});
-   ActionCreator.reset();
+   this.setState({ messageFile: event.target.value, schemaPanel: 'Schema Validation (XSD)', schemaValidation: '', schematronValidation: [], businessProfileSchematronValidation: [] });
   }
   
   onStatusChange(event) {
     this.setState({businessProfileValidationRequired: event.target.checked});
-    ActionCreator.reset();
   }
 
   handleMessageSchemaVersionIdChange(event) {
@@ -84,7 +82,7 @@ class ERNComponent extends React.Component {
   
   handleSchemaChange(event) {
     event.preventDefault();
-    this.setState({schema: event.target.title, messageSchemaVersionId: 'Schema Version', releaseProfileVersionId: 'Release Profile'});
+    this.setState({ schema: event.target.title, messageSchemaVersionId: 'Schema Version', releaseProfileVersionId: 'Release Profile' });
   }
 
   handleReleaseProfileVersionIdChange(event) {
@@ -105,14 +103,14 @@ class ERNComponent extends React.Component {
   }
 
   componentDidUpdate(){
-    if (this.state.messageSchemaVersionId == ''){
-      this.setState({ messageSchemaVersionId:'Schema Version', schemaValidation: '', schemaPanel: 'Schema Validation (XSD)'});
+    if (this.state.messageSchemaVersionId == '') {
+      this.setState({ messageSchemaVersionId:'Schema Version', schemaValidation: '', schematronValidation: [], businessProfileSchematronValidation: [], schemaPanel:'Schema Validation (XSD)' });
     }
-    if (this.state.releaseProfileVersionId == ''){
-      this.setState({ releaseProfileVersionId:'Release Profile', schematronValidation: [], businessProfileSchematronValidation: []});
+    if (this.state.releaseProfileVersionId == '') {
+      this.setState({ releaseProfileVersionId:'Release Profile', schemaValidation: '', schematronValidation: [], businessProfileSchematronValidation: [] });
     }
-    if (this.state.schema == ''){
-      this.setState({ schema:'Schema', businessProfileSchematronValidation: []});
+    if (this.state.schema == '') {
+      this.setState({ schema:'Schema', businessProfileSchematronValidation: [], schemaValidation: '', schematronValidation: [] });
     }
   }
 
@@ -137,7 +135,9 @@ class ERNComponent extends React.Component {
     } else {
       formData.append('releaseProfileVersionId', this.state.releaseProfileVersionId);
     }
-    formData.append('businessProfileValidationRequired', this.state.businessProfileValidationRequired);
+    if (this.state.messageSchemaVersionId == '3.8.2' || this.state.messageSchemaVersionId == '3.7.1') {
+      formData.append('businessProfileValidationRequired', this.state.businessProfileValidationRequired);
+    }
     this.setState({ isLoading: true});
     ActionCreator.ValidateXML(formData);
     this.setState({ messageFile:''});

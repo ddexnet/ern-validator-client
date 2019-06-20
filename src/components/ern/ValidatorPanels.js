@@ -1,5 +1,6 @@
 import React from 'react';
 import {Panel} from 'react-bootstrap';
+import ErrorComponent from './ErrorComponent';
 
 class ERNPanel extends React.Component{
   render(){
@@ -18,8 +19,9 @@ class ERNPanel extends React.Component{
         <Panel bsStyle="warning" header={this.props.schematronPanel}>
           <xmp className="xmp-panel">
             <div>
-              {this.props.schematronValidation.map((schematronValidate) => (
-                <p>{schematronValidate.msg}  {schematronValidate.role}</p>
+              <ErrorComponent validation={this.props.schematronValidation} />
+              { this.props.schematronValidation.map((schematronValidate) => (
+                <p> {schematronValidate.msg}  {schematronValidate.role}</p>
               ))}
             </div>
           </xmp>
@@ -29,6 +31,7 @@ class ERNPanel extends React.Component{
         <Panel bsStyle="info" header={this.props.businessProfileSchematronPanel}>
           <xmp className="xmp-panel">
             <div>
+              <ErrorComponent validation={this.props.businessProfileSchematronValidation} />
               {this.props.businessProfileSchematronValidation.map((schematronValidate) => (
                 <p>{schematronValidate.msg}  {schematronValidate.role}</p>
               ))}
