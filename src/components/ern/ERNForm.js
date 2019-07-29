@@ -28,9 +28,10 @@ class ERNForm extends React.Component{
 
   constructor() {
     super();
-    this.schemaList = ['ERN', 'RIN Full'];
+    this.schemaList = ['ERN', 'RIN Full', 'MLC'];
     this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1', '4.1.1'];
     this.rinMessageSchemaVersionIdList = ['1.1'];
+    this.mlcMessageSchemaVersionIdList = ['1.3.1', '1.4'];
     this.messageSchemaVersionIdList = ['Please select a schema.'];
     this.releaseProfileVersionIdList = {'v1.3':[ 'AudioAlbum', 'AudioAlbumMusicOnly', 'AudioAlbumMusicAndSpeech', 'AudioSingle', 'AudioBook', 'DigitalBoxedSet',
          'DigitalClassicalAudioAlbum', 'FilmBundle', 'LongformVideo', 'MidiRingtone', 'MixedMediaBundle', 'ReleaseProfileDeletedRules', 'Ringtone', 'SimpleVideoSingle',
@@ -80,7 +81,16 @@ class ERNForm extends React.Component{
             </ButtonToolbar>
           </FormGroup>
           }
-          { !(this.props.messageSchemaVersionId == '3.4.1' || this.props.schema == 'RIN Full') &&
+          { this.props.schema == 'MLC'&&
+            <FormGroup onClick={this.props.handleMessageSchemaVersionIdChange}>
+              <ButtonToolbar>
+                <DropdownButton title={this.props.messageSchemaVersionId} bsSize="small" id="dropdown-size-small">
+                  {getDropDownOptions(this.mlcMessageSchemaVersionIdList)}
+                </DropdownButton>
+              </ButtonToolbar>
+            </FormGroup>
+          }
+          { !(this.props.messageSchemaVersionId == '3.4.1' || this.props.schema == 'RIN Full' || this.props.schema == 'MLC') &&
             <FormGroup onClick={this.props.handleReleaseProfileVersionIdChange}>
               <ButtonToolbar className="custom-button">
                 <DropdownButton title={this.props.releaseProfileVersionId} id="dropdown-size-small" bsSize="small">
@@ -90,14 +100,6 @@ class ERNForm extends React.Component{
             </FormGroup>
           }
           &nbsp;
-          { (this.props.messageSchemaVersionId == '3.8.2' || this.props.messageSchemaVersionId == '3.7.1') &&
-            <FormGroup>
-              <ButtonToolbar>
-                <Checkbox className="checkbox" name="status" onChange={this.props.onStatusChange} />
-                <ControlLabel className="box-label">Is Business Profile validation required?</ControlLabel>
-              </ButtonToolbar>
-            </FormGroup>
-          }
           <br/>
           <FormGroup>
             <ControlLabel></ControlLabel>

@@ -4,16 +4,15 @@ import {Jumbotron, Button, Grid } from 'react-bootstrap';
 
 class About extends Component {
   constructor() {
-      super();
-     this.state = { about: 'This is a Schema XML validator app. Enjoy!!'};
+    super();
+    this.state = { about: 'This is a Schema XML validator app. Enjoy!!'};
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-      this.handleClick = this.handleClick.bind(this);
-    }
-
-     handleClick(e){
-          e.preventDefault();
-          this.setState({ about:'DDEX XML Validator is an API that can be used to validate XML documents against schema (XSD) and advanced XML validation (Schematron). XML validator checks to see if an XML document is valid and well formed. A well formed document must meet the standards of XML syntax rules, whereas a valid document must meet the standards of a XML Schema.'});
-    }
+  handleClick(e){
+    e.preventDefault();
+    this.setState({ about:'DDEX XML Validator is an API that can be used to validate XML documents against schema (XSD) and advanced XML validation (Schematron). XML validator checks to see if an XML document is valid and well formed. A well formed document must meet the standards of XML syntax rules, whereas a valid document must meet the standards of a XML Schema.'});
+  }
 
   render() {
     return (

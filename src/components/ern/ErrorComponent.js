@@ -1,9 +1,9 @@
 import React from 'react';
 
 function getCount(name, validation) {
-  var count = 0;
+  var count  = 0;
   for (var i=0, len=validation.length; i<len; i++) {
-    if (typeof validation[i] != "object") continue;
+    if (typeof validation[i] != 'object') continue;
     count = validation[i][name];
     return count;
   }
@@ -15,22 +15,26 @@ class ErrorComponent extends React.Component{
     let conditionalErrorsCount = getCount('conditionalErrors', this.props.validation);
     let errorsCount = getCount('errors', this.props.validation);
     let conditionalFatalErrorsCount = getCount('conditionalFatalErrors', this.props.validation);
+    let noErrors = getCount('noError', this.props.validation);
     const styleRed = {color : 'red'};
     return(
     <div>
       <xmp className="xmp-panel">
         <div>
           { fatalErrorsCount && fatalErrorsCount != 0 &&
-            <p style={styleRed}> Number of Fatal Errors: {fatalErrorsCount} </p>
+              <p style={styleRed}> Number of Fatal Errors: {fatalErrorsCount} </p>
           }
           { conditionalErrorsCount && conditionalErrorsCount != 0 &&
-            <p style={styleRed}> Number of Conditional Errors: {conditionalErrorsCount} </p>
+              <p style={styleRed}> Number of Conditional Errors: {conditionalErrorsCount} </p>
           }
           { errorsCount && errorsCount != 0 &&
-            <p style={styleRed}> Number of Errors: {errorsCount} </p>
+              <p style={styleRed}> Number of Errors: {errorsCount} </p>
           }
           { conditionalFatalErrorsCount && conditionalFatalErrorsCount != 0 &&
-            <p style={styleRed}> Number of Conditional Fatal Errors: {conditionalFatalErrorsCount} </p>
+              <p style={styleRed}> Number of Conditional Fatal Errors: {conditionalFatalErrorsCount} </p>
+          }
+          { noErrors && noErrors != 0 &&
+              <p> {noErrors} </p>
           }
         </div>
       </xmp>

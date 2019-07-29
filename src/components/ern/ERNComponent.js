@@ -136,7 +136,7 @@ class ERNComponent extends React.Component {
       formData.append('releaseProfileVersionId', this.state.releaseProfileVersionId);
     }
     if (this.state.messageSchemaVersionId == '3.8.2' || this.state.messageSchemaVersionId == '3.7.1') {
-      formData.append('businessProfileValidationRequired', this.state.businessProfileValidationRequired);
+      formData.append('businessProfileValidationRequired', true);
     }
     this.setState({ isLoading: true});
     ActionCreator.ValidateXML(formData);
