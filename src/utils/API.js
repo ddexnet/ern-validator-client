@@ -7,7 +7,7 @@ export default {
   ValidateXML: function(formData) {
     return new Promise((resolve, reject) => {
       request
-        .post('http://localhost:6060/api/json/validate')
+        .post('http://ddex-validator.smecde.com/api/json/validate')
         .withCredentials()
         .send(formData)
         .set('Accept', 'application/json')

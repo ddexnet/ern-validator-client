@@ -28,16 +28,18 @@ class ERNPanel extends React.Component{
         </Panel>
       </div>
       <div>
+      { !this.props.businessProfileSchematronValidation.length == 0 &&
         <Panel bsStyle="info" header={this.props.businessProfileSchematronPanel}>
           <xmp className="xmp-panel">
             <div>
               <ErrorComponent validation={this.props.businessProfileSchematronValidation} />
-              {this.props.businessProfileSchematronValidation.map((schematronValidate) => (
+              { this.props.businessProfileSchematronValidation.map((schematronValidate) => (
                 <p>{schematronValidate.msg}  {schematronValidate.role}</p>
               ))}
             </div>
           </xmp>
         </Panel>
+      }
       </div>
     </div>
   );
