@@ -15,7 +15,7 @@ function getReleaseProfileDropDownOptions(data, messageSchemaVersionId) {
   let items = [];
   items.push(<MenuItem title='None'>None</MenuItem>)
   if (messageSchemaVersionId && messageSchemaVersionId != 'Schema Version') {
-    var dict = { '3.7.1':'v1.3', '3.8.2':'v1.4', '4.1':'v2.1', '4.1.1':'v2.1' };
+    var dict = { '3.7.1':'v1.3', '3.8.2':'v1.4', '3.8.3':'v1.4', '4.1':'v2.1', '4.1.1':'v2.1' };
     var value = data[dict[messageSchemaVersionId]];
     for (let i = 0; i <= value.length; i++) {
       items.push(<MenuItem title={value[i]}>{value[i]}</MenuItem>)
@@ -29,7 +29,7 @@ class ERNForm extends React.Component{
   constructor() {
     super();
     this.schemaList = ['ERN', 'RIN Full', 'MLC', 'MEAD'];
-    this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '4.1', '4.1.1'];
+    this.ernMessageSchemaVersionIdList = ['3.4.1', '3.7.1', '3.8.2', '3.8.3', '4.1', '4.1.1'];
     this.rinMessageSchemaVersionIdList = ['1.1'];
     this.mlcMessageSchemaVersionIdList = ['1.3.1', '1.4'];
     this.meadMessageSchemaVersionIdList = ['1.0'];
