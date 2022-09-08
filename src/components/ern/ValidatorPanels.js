@@ -1,35 +1,49 @@
-import request from 'superagent/lib/client'
 import React from 'react';
-import {Panel, Button, Form, FormGroup, ControlLabel, Grid, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import {Panel} from 'react-bootstrap';
+import ErrorComponent from './ErrorComponent';
 
 class ERNPanel extends React.Component{
   render(){
     return(
     <div>
       <div>
-        <Panel header={this.props.schemaPanel}>
-              <xmp>
-              <div>
-                  {this.props.schemaValidation}
-              </div>
-              </xmp>
+        <Panel bsStyle="primary" header={this.props.schemaPanel}>
+          <xmp className="xmp-panel">
+            <div>
+              {this.props.schemaValidation}
+            </div>
+          </xmp>
         </Panel>
       </div>
       <div>
-          <Panel bsStyle="success" header={this.props.schematronPanel}>
-                <xmp>
-                   <div>
-                          {this.props.schematronValidation.map((schematronValidate) => (
-                                                         <p>{schematronValidate.msg}  {schematronValidate.role}</p>
-                                                           ))}
-                   </div>
-
-                </xmp>
-          </Panel>
-        </div>
+        <Panel bsStyle="warning" header={this.props.schematronPanel}>
+          <xmp className="xmp-panel">
+            <div>
+              <ErrorComponent validation={this.props.schematronValidation} />
+              { this.props.schematronValidation.map((schematronValidate) => (
+                <p> {schematronValidate.msg}  {schematronValidate.role}</p>
+              ))}
+            </div>
+          </xmp>
+        </Panel>
+      </div>
+      <div>
+      { !this.props.businessProfileSchematronValidation.length == 0 &&
+        <Panel bsStyle="info" header={this.props.businessProfileSchematronPanel}>
+          <xmp className="xmp-panel">
+            <div>
+              <ErrorComponent validation={this.props.businessProfileSchematronValidation} />
+              { this.props.businessProfileSchematronValidation.map((schematronValidate) => (
+                <p>{schematronValidate.msg}  {schematronValidate.role}</p>
+              ))}
+            </div>
+          </xmp>
+        </Panel>
+      }
+      </div>
     </div>
-      );
-    }
+  );
   }
+}
 
 export default ERNPanel;

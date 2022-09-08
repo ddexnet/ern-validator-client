@@ -7,23 +7,23 @@ import About from './main/About';
 import '../styles/bootstrap/css/bootstrap.min.css';
 import '../styles/bootstrap/css/bootstrap-theme.min.css';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 class AppComponent extends React.Component {
-    render() {
-      return (
+  render() {
+    return (
       <Router>
         <div>
           <Header>
-              <Route exact path="/" component={Ern}/>
-              <Route path="/help" component={Help}/>
-              <Route path="/about" component={About}/>
+            <Route exact path="/" component={Ern}/>
+            <Route path="/help" component={Help}/>
+            <Route path="/about" component={About}/>
           </Header>
         </div>
       </Router>
-      );
-    }
+    );
+  }
 }
 
 AppComponent.defaultProps = {
