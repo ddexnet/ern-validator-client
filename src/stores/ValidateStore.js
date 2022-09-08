@@ -5,8 +5,8 @@ import { EventEmitter } from 'events';
 const CHANGE_EVENT = 'change';
 
 let _schemaValidation = [];
-let _validateError = '';
 let _schematronValidation = [];
+let _businessProfileSchematronValidation = [];
 
 function setSchemaValidation(schemaValidation) {
   _schemaValidation = schemaValidation;
@@ -16,13 +16,9 @@ function setSchematronValidation(schematronValidation) {
   _schematronValidation = schematronValidation;
 }
 
-function setValidateError(validateError) {
-  _validateError = validateError;
+function setBusinessProfileSchematronValidation(businessProfileSchematronValidation) {
+  _businessProfileSchematronValidation = businessProfileSchematronValidation;
 }
-
- function reset() {
-     _schematronValidation = [];
-    }
 
 class StoreClass extends EventEmitter {
 
@@ -32,8 +28,6 @@ class StoreClass extends EventEmitter {
   updateListener(callback){
     this.removeListener(CHANGE_EVENT, callback)
     this.on(CHANGE_EVENT, callback)
-
-
   }
 
   addChangeListener(callback) {
@@ -44,18 +38,17 @@ class StoreClass extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
-    getSchemaValidation() {
-      return _schemaValidation ;
-    }
+  getSchemaValidation() {
+    return _schemaValidation ;
+  }
 
-    getSchematronValidation() {
-      return _schematronValidation ;
-    }
+  getSchematronValidation() {
+    return _schematronValidation ;
+  }
 
-    getValidateError() {
-      return _validateError;
-    }
-
+  getBusinessProfileSchematronValidation() {
+    return _businessProfileSchematronValidation ;
+  }
 }
 
 const Store = new StoreClass();
@@ -67,27 +60,20 @@ Store.dispatchToken = AppDispatcher.register(action => {
   switch(action.actionType) {
     case AppConstants.SCHEMA_VALIDATION:
       setSchemaValidation(action.schemaValidation);
-      setSchematronValidation(action.schematronValidation);
-      // We need to call emitChange so the event listener
-      // knows that a change has been made
-      Store.emitChange();
-      break;
-    case AppConstants.VALIDATE_ERROR:
-      setValidateError(action.validateError);
-      Store.emitChange();
-      break;
-    case AppConstants.SCHEMATRON_VALIDATION:
-      setSchematronValidation(action.schematronValidation);
-      Store.emitChange();
-      break;
-
-    case AppConstants.RESET:
-      setSchematronValidation(action.schematronValidation);
-      setSchemaValidation(action.schematronValidation);
+      if(action.schematronValidation != null){
+        setSchematronValidation(action.schematronValidation);
+      } else {
+        setSchematronValidation([]);
+      }
+      if(action.businessProfileSchematronValidation != null){
+        setBusinessProfileSchematronValidation(action.businessProfileSchematronValidation);
+      } else {
+        setBusinessProfileSchematronValidation([]);
+      }
       Store.emitChange();
       break;
 
-    default:
+      default:
   }
 });
 

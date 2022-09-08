@@ -11,7 +11,7 @@ class Header extends React.Component {
         <Navbar inverse staticTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">ERN Validator</Link>
+              <Link to="/">DDEX Validator</Link>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>

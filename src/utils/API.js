@@ -7,32 +7,15 @@ export default {
   ValidateXML: function(formData) {
     return new Promise((resolve, reject) => {
       request
-        .post('http://localhost:6060/api/json/validateXML')
+        .post('https://ddex-validator.smecde.com/api/json/validate')
         .withCredentials()
-         .send(formData)
+        .send(formData)
         .set('Accept', 'application/json')
         .end((error, response) => {
-          console.log(error);
-          if (error) reject(error);
-          resolve(JSON.parse(response.text));
+          var responseText = JSON.parse(response.text);
+          if (responseText.error) reject(responseText);
+          resolve(responseText);
         });
     });
-  },
-    schematronValidate: function(formData) {
-      return new Promise((resolve, reject) => {
-        request
-          .post('http://localhost:6060/api/json/validateSchematron')
-          .withCredentials()
-           .send(formData)
-           .set('Accept', 'application/json')
-          .end((error, response) => {
-          console.log(JSON.parse(response.text));
-            if (error) reject(error);
-            resolve(JSON.parse(response.text));
-          });
-      });
-    }
-
-
-
+  }
 }

@@ -24,8 +24,15 @@ html, body, .app-container, .main-container {
   width: 90px !important;
 }
 
-.modal-open {
+.loading-modal-open {
   opacity: 0.5 !important;
+}
+
+.loading-modal-dialog .modal-dialog {
+  width: 90px;
+  top: 40%;
+  margin: auto;
+  opacity: 1 !important;
 }
 
 .loader {
@@ -61,3 +68,27 @@ table.table{
 .panel{
    word-wrap: break-word;
 }
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  font-size: 12px;
+  margin-bottom: 5px;
+  font-weight: 700;
+  padding-left: 4px;
+}
+
+.checkbox, .radio {
+  position: relative;
+  padding-left: 6px;
+}
+
+.custom-button .dropdown.open>.dropdown-menu {
+  height: 400px;
+  overflow: auto;
+}
+
+.xmp-panel {
+  white-space: pre-wrap;
+}
+
